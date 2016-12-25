@@ -9,7 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+<<<<<<< HEAD
             android:name=".activity.LoginActivity"
+=======
+            android:name=".activity.MainActivity"
+>>>>>>> a596632fc428a770d12c645152c1cb4b10a4a95d
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,8 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".activity.RegisterActivity"></activity>
         <activity android:name=".activity.MainActivity"></activity>
+=======
+>>>>>>> a596632fc428a770d12c645152c1cb4b10a4a95d
     </application>
 
 </manifest>

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/SmartWallet-master.iml" filepath="$PROJECT_DIR$/SmartWallet-master.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/SmartWallet2.iml" filepath="$PROJECT_DIR$/SmartWallet2.iml" />
+>>>>>>> a596632fc428a770d12c645152c1cb4b10a4a95d
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
