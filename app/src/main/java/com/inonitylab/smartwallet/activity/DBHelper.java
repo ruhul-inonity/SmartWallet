@@ -20,10 +20,31 @@ public class DBHelper extends SQLiteOpenHelper {
        email text,
        password text);
     */
-    public static final String CREATE_TABLE_USERS = "create table users (id integer primary key autoincrement, email text, pass text);";
-    public static final String CREATE_TABLE_TRANSACTIONS = "create table transaction (transactonid integer primary key autoincrement, userid integer, category text, name text, date text, amount integer);";
-    public static final String CREATE_TABLE_CATEGORIES = "create table categories (categoryid integer primary key autoincrement, categoryType text, categoryName text, userid integer);";
-    public static final String CREATE_TABLE_REMINDERS = "create table transaction (userid integer, category text, name text, date text, amount integer, recurring integer, repeatdate date, reminderid primary key autoincrement);";
+    public static final String CREATE_TABLE_USERS = "create table users (" +
+            "id integer primary key autoincrement, " +
+            "email text, " +
+            "pass text);";
+    public static final String CREATE_TABLE_TRANSACTIONS = "create table transaction (" +
+            "transactonid integer primary key autoincrement, " +
+            "userid integer, " +
+            "category text, " +
+            "name text, " +
+            "date text, " +
+            "amount integer);";
+    public static final String CREATE_TABLE_CATEGORIES = "create table categories (" +
+            "categoryid integer primary key autoincrement, " +
+            "categoryType text, " +
+            "categoryName text, " +
+            "userid integer);";
+    public static final String CREATE_TABLE_REMINDERS = "create table transaction (" +
+            "userid integer, " +
+            "category text, " +
+            "name text, " +
+            "date text, " +
+            "amount integer, " +
+            "recurring integer, " +
+            "repeatdate date, " +
+            "reminderid primary key autoincrement);";
 
 
     public DBHelper(Context context) {  //explain this constructor and how it works with other activities.
@@ -52,8 +73,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();//write to databasen---EXPLAIN THIS!!
 
         ContentValues values = new ContentValues(); //input values into database
-        values.put(emailid, email);
-        values.put(pass, password);
+        values.put("email", email);
+        values.put("pass", password);
 
         long id = db.insert("users",null, values); //inserting
         db.close();

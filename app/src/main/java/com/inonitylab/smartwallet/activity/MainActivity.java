@@ -1,5 +1,6 @@
 package com.inonitylab.smartwallet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +31,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
 
+
+    private Session session;
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.ic_menu_camera,
@@ -39,8 +43,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
+        session = new Session(this);
+        if (!session.loggedin()) {
+            logout();
+        }
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         setupViewPager(viewPager);
@@ -99,7 +107,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (id == R.id.logout){
+            logout();
+        }
+        else if (id == R.id.addTransaction){
+            Intent intent = new Intent(getApplicationContext(), Transaction.class);
+            startActivity(intent);
             return true;
         }
 
@@ -112,18 +126,33 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.activity_dashboard) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_budgets) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_calendar) {
+                Intent intent = new Intent(getApplicationContext(), Calendar.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_Categories) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_forecasts) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_help) {
+                Intent intent = new Intent(getApplicationContext(), Help.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_reminders) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_suggestions) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.activity_transaction) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,6 +193,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    private void logout() {
+        session.setLoggedIn(false);
+        finish();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

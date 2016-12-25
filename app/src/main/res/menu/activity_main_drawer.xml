@@ -3,33 +3,49 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/activity_dashboard"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Dashboard" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/activity_transaction"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Transaction" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/activity_budgets"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Budgets" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/activity_reminders"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Reminders" />
+        <item
+            android:id="@+id/activity_Categories"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Categories" />
+        <item
+            android:id="@+id/activity_calendar"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/activity_forecasts"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Forecasts" />
+        <item
+            android:id="@+id/activity_suggestions"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Suggestions" />
+        <item
+            android:id="@+id/activity_help"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Help" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Actions">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
+                android:id="@+id/activity_logout"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Logout" />
         </menu>
     </item>
 
