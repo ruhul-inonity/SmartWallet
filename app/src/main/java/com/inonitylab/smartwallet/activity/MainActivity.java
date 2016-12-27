@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.database.CategoriesCRUD;
+import com.inonitylab.smartwallet.database.SharedPrefDb;
 import com.inonitylab.smartwallet.fragment.Expense;
 import com.inonitylab.smartwallet.fragment.Income;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
 
 
+    SharedPrefDb sharedPrefDb;
     private Session session;
     private TabLayout tabLayout;
     private int[] tabIcons = {
@@ -43,7 +46,23 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
+
+
+        /*
+        * creating categories for all users in first time app run
+        * */
+        sharedPrefDb = new SharedPrefDb(this);
+        try {
+            int firstTimeStatus = sharedPrefDb.getFirstTimeStatus();
+            if (firstTimeStatus == 0){
+                CategoriesCRUD crud = new CategoriesCRUD(getApplicationContext());
+                crud.insertCategories();
+                sharedPrefDb.setFirstTimeStatus();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         session = new Session(this);
         if (!session.loggedin()) {

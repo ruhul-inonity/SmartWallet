@@ -1,4 +1,4 @@
-package com.inonitylab.smartwallet.activity;
+package com.inonitylab.smartwallet.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,18 +13,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "smart_wallet"; //initialize database name and version
     public static final int DB_VERSION = 1;
 
-    private static final String TABLE_USERS = "users";
-    private static final String TABLE_TRANSACTIONS = "transactions";
-    private static final String TABLE_CATEGORIES = "categories";
-    private static final String TABLE_REMINDERS = "reminders";
+    public static final String TABLE_USERS = "users";
+    public static final String TABLE_TRANSACTIONS = "transactions";
+    public static final String TABLE_CATEGORIES = "categories";
+    public static final String TABLE_REMINDERS = "reminders";
 
-    private static final String COLUMN_ID = "_id";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_CATEGORY_ID = "category_id";
     public static final String COLUMN_TRANSACTION_ID = "transaction_id";
 
-    private static final String COLUMN_USER_EMAIL = "u_email";
-    private static final String COLUMN_USER_PASSWORD = "u_password";
+    public static final String COLUMN_USER_EMAIL = "u_email";
+    public static final String COLUMN_USER_PASSWORD = "u_password";
     public static final String COLUMN_AMOUNT = "amount";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TIME = "time";

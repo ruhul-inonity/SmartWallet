@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.database.DBHelper;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 

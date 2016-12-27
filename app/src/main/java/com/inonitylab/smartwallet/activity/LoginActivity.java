@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.database.DBHelper;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private Button login, register;
