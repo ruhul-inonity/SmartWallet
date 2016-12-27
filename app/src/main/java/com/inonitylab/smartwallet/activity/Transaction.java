@@ -35,7 +35,7 @@ public class Transaction extends AppCompatActivity {
         getExpenseTypes();
         getTransactionRecurringTypes();
 
-        dateSelected = (TextView) findViewById(R.id.transaction_date_selected);
+       /* dateSelected = (TextView) findViewById(R.id.transaction_date_selected);
         dateSelected.setVisibility(View.INVISIBLE);
 
         dateBtn = (Button) findViewById(R.id.transaction_Datebtn);
@@ -66,7 +66,7 @@ public class Transaction extends AppCompatActivity {
         expenseType = (Spinner) findViewById(R.id.spinner_transaction_expenseType);
         transactionRecurring = (Spinner) findViewById(R.id.spinner_transaction_Recurring);
         transactionRecurring.setVisibility(View.GONE);
-
+*/
 
         recurringOption = (CheckBox) findViewById(R.id.transaction_checkbox_recurringOption);
         recurringOption.setOnClickListener(new View.OnClickListener() {

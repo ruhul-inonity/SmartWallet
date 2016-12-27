@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
 
         /*
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
             logout();
         }
         else if (id == R.id.addTransaction){
-            Intent intent = new Intent(getApplicationContext(), Transaction.class);
+            Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
             startActivity(intent);
             return true;
         }

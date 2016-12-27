@@ -40,7 +40,6 @@
     <EditText
         android:layout_width="280dp"
         android:layout_height="220dp"
-        android:background="@drawable/back"
         android:lines="5"
         android:id="@+id/help_editText"
         android:hint="write your problem here..."
