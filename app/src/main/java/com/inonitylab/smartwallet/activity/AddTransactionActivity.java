@@ -2,6 +2,7 @@ package com.inonitylab.smartwallet.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,16 +26,19 @@ import java.util.*;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
-    EditText editTextAmount;
+    EditText editTextAmount,editTextNote;
     TextView textDate,textCategory;
     CheckBox checkRecurring;
     Spinner spinnerRecurring;
     Spinner spinnerCategory;
     Button buttonAddTransaction;
+    String flag = "0";
+
+    private String amount,date,note,category,categoryType,recurring;
 
     final int DIALOG_ID = 1;
     int year, month, day;
-    String date, selectedMonth, selectedDay,selectedYear;
+    String  selectedMonth, selectedDay,selectedYear;
 
     ArrayAdapter<String> recurringAdapter,categoryAdapter;
     ArrayList<String> recurringTime = new ArrayList<>();
@@ -50,11 +54,34 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         editTextAmount = (EditText) findViewById(R.id.editTextTransactionAmount);
         textDate = (TextView) findViewById(R.id.textDateSelect);
-        //textCategory = (TextView) findViewById(R.id.textCategorySelect);
-        spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
+        textCategory = (TextView) findViewById(R.id.textCategorySelect);
+        editTextNote = (EditText) findViewById(R.id.textNote);
+       // spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         checkRecurring = (CheckBox) findViewById(R.id.transaction_checkbox_recurringOption);
         spinnerRecurring = (Spinner) findViewById(R.id.spinner_transaction_Recurring);
         buttonAddTransaction = (Button) findViewById(R.id.buttonAddTransaction);
+
+        // Intent intent = new Intent();
+        try {
+            category = getIntent().getExtras().getString("category");
+            categoryType = getIntent().getExtras().getString("categoryType");
+            flag = getIntent().getExtras().getString("flag");
+            Log.d("category and flag","............................"+flag + category);
+            textCategory.setText(category);
+            if (!flag.isEmpty() && flag.equals("pickCategory")){
+
+                Bundle pickedBundle = getIntent().getExtras();
+                editTextAmount.setText(pickedBundle.getString("amount"));
+                textDate.setText(pickedBundle.getString("date").toString());
+                editTextNote.setText(pickedBundle.getString("note"));
+                textCategory.setText(category);
+                Log.d("category and flag","............................"+flag + category+pickedBundle.getString("date"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         recurringTime.add("Daily");
         recurringTime.add("Weekly");
@@ -62,7 +89,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         recurringAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_row_spinner, recurringTime);
         categoryAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_row_spinner, categoryNames);
         spinnerRecurring.setAdapter(recurringAdapter);
-        spinnerCategory.setAdapter(categoryAdapter);
+       // spinnerCategory.setAdapter(categoryAdapter);
 
         buttonAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +102,20 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDialog(DIALOG_ID);
+            }
+        });
+
+        textCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("amount",editTextAmount.getText().toString());
+                bundle.putString("date",textDate.getText().toString());
+                bundle.putString("note",editTextNote.getText().toString());
+                bundle.putString("category",textCategory.getText().toString());
+                Intent intent = new Intent(AddTransactionActivity.this,PickCategoryActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -94,13 +135,16 @@ public class AddTransactionActivity extends AppCompatActivity {
         TransactionCRUD transactionCRUD = new TransactionCRUD(this);
 
         Double amount = Double.valueOf(editTextAmount.getText().toString());
-        int categoryId = spinnerCategory.getSelectedItemPosition();
+       // int categoryId = spinnerCategory.getSelectedItemPosition();
         String date = textDate.getText().toString();
+        String note = editTextNote.getText().toString();
 
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setAmount(amount);
-        transactionModel.setCategoryId(categoryId);
+       // transactionModel.setCategoryId(categoryId);
         transactionModel.setDate(date);
+        transactionModel.setNote(note);
+        transactionModel.setCategoryType(categoryType);
 
       long flag =   transactionCRUD.insertTransaction(transactionModel);
         if (flag>0){

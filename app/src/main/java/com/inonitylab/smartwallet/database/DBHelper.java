@@ -44,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_ID + " INTEGER PRIMARY KEY," +
             COLUMN_TRANSACTION_ID + " INTEGER," +
             COLUMN_CATEGORY_ID + " INTEGER," +
+            COLUMN_CATEGORY_TYPE + " TEXT," +
             COLUMN_USER_ID + " INTEGER," +
             COLUMN_AMOUNT + " DOUBLE," +
             COLUMN_NOTE + " TEXT," +

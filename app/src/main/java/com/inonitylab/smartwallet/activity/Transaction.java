@@ -103,8 +103,8 @@ public class Transaction extends AppCompatActivity {
 
     private void getExpenseTypes() {
         expenseTypes = new ArrayList();
-        expenseTypes.add("Income");
-        expenseTypes.add("Expense");
+        expenseTypes.add("IncomeCategory");
+        expenseTypes.add("ExpenseCategory");
     }
 
 

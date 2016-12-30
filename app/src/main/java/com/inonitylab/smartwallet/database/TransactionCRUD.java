@@ -28,6 +28,7 @@ public class TransactionCRUD extends DBHelper {
             values.put(COLUMN_TRANSACTION_ID, 0);
             values.put(COLUMN_CATEGORY_ID, transaction.getCategoryId());
             values.put(COLUMN_USER_ID, transaction.getUserId());
+            values.put(COLUMN_CATEGORY_TYPE, transaction.getCategoryType());
             values.put(COLUMN_AMOUNT, transaction.getAmount());
             values.put(COLUMN_NOTE, transaction.getNote());
             values.put(COLUMN_DATE, transaction.getDate());

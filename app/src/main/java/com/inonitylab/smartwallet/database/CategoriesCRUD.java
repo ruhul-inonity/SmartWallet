@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.inonitylab.smartwallet.model.Categories;
 
@@ -82,7 +83,7 @@ public class CategoriesCRUD extends DBHelper {
     }
 
     public ArrayList<Categories> getAll_Categories() {
-        ArrayList<Categories> chartOfAccountList = new ArrayList<Categories>();
+        ArrayList<Categories> allCategoryList = new ArrayList<Categories>();
 
         db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM categories ORDER BY category_id ASC", null);
@@ -97,12 +98,65 @@ public class CategoriesCRUD extends DBHelper {
                 String categoryType = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_TYPE));
 
                 Categories categories = new Categories(id, category_id, user_id, categoryName,categoryType);
-                chartOfAccountList.add(categories);
+                allCategoryList.add(categories);
                 cursor.moveToNext();
             }
             cursor.close();
         }
         db.close();
-        return chartOfAccountList;
+        return allCategoryList;
+    }
+    public ArrayList<Categories> getIncomeCategories() {
+        ArrayList<Categories> incomeCategoryList = new ArrayList<Categories>();
+
+        db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM categories where category_type = 'Income' ORDER BY category_id ASC", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                int category_id = cursor.getInt(cursor.getColumnIndex(COLUMN_CATEGORY_ID));
+                int user_id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+                String categoryName = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME));
+                String categoryType = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_TYPE));
+
+                Log.d("getIncomeCategories",category_id+"............. "+categoryName);
+                Categories categories = new Categories(id, category_id, user_id, categoryName,categoryType);
+                incomeCategoryList.add(categories);
+
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        db.close();
+        return incomeCategoryList;
+    }
+
+    public ArrayList<Categories> getExpenseCategories() {
+        ArrayList<Categories> expenseCategoryList = new ArrayList<Categories>();
+
+        db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM categories where category_type = 'Expense' ORDER BY category_id ASC", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                int category_id = cursor.getInt(cursor.getColumnIndex(COLUMN_CATEGORY_ID));
+                int user_id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+                String categoryName = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME));
+                String categoryType = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_TYPE));
+
+                Log.d("getIncomeCategories",category_id+"............. "+categoryName);
+                Categories categories = new Categories(id, category_id, user_id, categoryName,categoryType);
+                expenseCategoryList.add(categories);
+
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        db.close();
+        return expenseCategoryList;
     }
 }

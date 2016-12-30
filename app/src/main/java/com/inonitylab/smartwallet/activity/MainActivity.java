@@ -2,30 +2,26 @@ package com.inonitylab.smartwallet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
 import com.inonitylab.smartwallet.database.CategoriesCRUD;
 import com.inonitylab.smartwallet.database.SharedPrefDb;
-import com.inonitylab.smartwallet.fragment.Expense;
-import com.inonitylab.smartwallet.fragment.Income;
+import com.inonitylab.smartwallet.fragment.FutureFragment;
+import com.inonitylab.smartwallet.fragment.IncomeDashboardFragment;
+import com.inonitylab.smartwallet.fragment.ExpenseDashboardFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +33,15 @@ public class MainActivity extends AppCompatActivity
     SharedPrefDb sharedPrefDb;
     private Session session;
     private TabLayout tabLayout;
-    private int[] tabIcons = {
+  /*  private int[] tabIcons = {
             R.drawable.ic_menu_camera,
             R.drawable.ic_menu_camera,
-    };
+    };*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
 
 
@@ -69,16 +65,16 @@ public class MainActivity extends AppCompatActivity
             logout();
         }
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPagerMain);
         setupViewPager(viewPager);
         assert viewPager != null;
         viewPager.setOnPageChangeListener(this);
 
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabsMian);
         assert tabLayout != null;
         tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
+       // setupTabIcons();
 
 
    /*     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -182,15 +178,15 @@ public class MainActivity extends AppCompatActivity
     /*
        * make swipe tab alive
        * */
-    private void setupTabIcons() {
+/*    private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-    }
+    }*/
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new Expense(), "Expense");
-        adapter.addFrag(new Income(), "Income");
+        adapter.addFrag(new IncomeDashboardFragment(), "Income");
+        adapter.addFrag(new ExpenseDashboardFragment(), "Expense");
         viewPager.setAdapter(adapter);
     }
 

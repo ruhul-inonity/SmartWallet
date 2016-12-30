@@ -7,9 +7,9 @@ package com.inonitylab.smartwallet.model;
 public class TransactionModel {
     int _id,userId,categoryId,transactionId;
     Double amount;
-    String note,date;
+    String note,date,categoryType;
 
-    public TransactionModel(int userId, int categoryId, int transactionId, Double amount, String note, String date) {
+    public TransactionModel(int userId, int categoryId, int transactionId,String categoryType ,Double amount, String note, String date) {
         this.userId = userId;
         this.categoryId = categoryId;
         this.transactionId = transactionId;
@@ -19,6 +19,14 @@ public class TransactionModel {
     }
 
     public TransactionModel() {
+    }
+
+    public String getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(String categoryType) {
+        this.categoryType = categoryType;
     }
 
     public int get_id() {

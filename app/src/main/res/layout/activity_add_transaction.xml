@@ -14,12 +14,12 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <android.support.design.widget.TextInputLayout
+<!--        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp">
+            android:layout_marginEnd="7dp">-->
 
 
             <EditText
@@ -31,7 +31,7 @@
                 android:inputType="phone"
                 android:textSize="25sp"
                 android:textStyle="bold"  />
-        </android.support.design.widget.TextInputLayout>
+      <!--  </android.support.design.widget.TextInputLayout>-->
 
     </LinearLayout>
 
@@ -63,15 +63,38 @@
         android:layout_height="1dp"
         android:layout_marginBottom="5dp"
         android:background="@color/colorPrimary"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ic_calender_black_24dp"/>
 
+        <EditText
+            android:id="@+id/textNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:maxLines="5"
+            android:textStyle="italic"
+            android:text="Note"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
-        <!--<ImageView
-            android:layout_width="0dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_category_24dp"/>
@@ -85,10 +108,9 @@
             android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:textStyle="bold"
-            android:text="Select Category"/>-->
+            android:text="Select Category"/>
 
-
-        <TextView
+<!--        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -100,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </Spinner>
+        </Spinner>-->
     </LinearLayout>
     <View
         android:layout_width="match_parent"
