@@ -144,8 +144,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.activity_dashboard) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_budgets) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        } else if (id == R.id.activity_transaction) {
+                Intent intent = new Intent(getApplicationContext(), Transaction.class);
                 startActivity(intent);
         } else if (id == R.id.activity_calendar) {
                 Intent intent = new Intent(getApplicationContext(), Calendar.class);

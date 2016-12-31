@@ -147,8 +147,8 @@
             android:layout_width="match_parent"
             android:layout_margin="10dp"
             android:id="@+id/spinner_transaction_Recurring"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:visibility="gone">
         </Spinner>
 
 

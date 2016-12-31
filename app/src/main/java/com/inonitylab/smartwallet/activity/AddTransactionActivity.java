@@ -33,6 +33,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     Spinner spinnerCategory;
     Button buttonAddTransaction;
     String flag = "0";
+    CheckBox recurringOption;
 
     private String amount,date,note,category,categoryType,recurring;
 
@@ -116,6 +117,17 @@ public class AddTransactionActivity extends AppCompatActivity {
                 Intent intent = new Intent(AddTransactionActivity.this,PickCategoryActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+
+        recurringOption = (CheckBox) findViewById(R.id.transaction_checkbox_recurringOption);
+        recurringOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recurringOption.isChecked()){
+                    spinnerRecurring.setVisibility(View.VISIBLE);
+                }
+                else spinnerRecurring.setVisibility(View.GONE);
             }
         });
 

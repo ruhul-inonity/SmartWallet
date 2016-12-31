@@ -4,53 +4,20 @@
     android:id="@+id/activity_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.inonitylab.smartwallet.activity.Transaction"
-
     android:orientation="vertical">
 
-<!--    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        android:id="@+id/et_transaction_name"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:id="@+id/spinner_transaction_tag"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"></Spinner>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:id="@+id/spinner_transaction_expenseType"
-        android:layout_height="wrap_content"></Spinner>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/transaction_checkbox_recurringOption"
-        android:text="Recurring Transaction?"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:id="@+id/spinner_transaction_Recurring"
-        android:layout_height="wrap_content"></Spinner>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/transaction_date_selected"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:text="Date"
-        android:id="@+id/transaction_Datebtn"/>
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Transaction"
-        android:id="@+id/transaction_Addbtn"/>-->
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        android:text="All transactions"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

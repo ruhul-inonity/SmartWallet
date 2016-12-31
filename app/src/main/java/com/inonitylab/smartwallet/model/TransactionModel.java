@@ -18,6 +18,17 @@ public class TransactionModel {
         this.date = date;
     }
 
+    public TransactionModel(int _id, int userId, int categoryId, int transactionId, Double amount, String note, String date, String categoryType) {
+        this._id = _id;
+        this.userId = userId;
+        this.categoryId = categoryId;
+        this.transactionId = transactionId;
+        this.amount = amount;
+        this.note = note;
+        this.date = date;
+        this.categoryType = categoryType;
+    }
+
     public TransactionModel() {
     }
 
