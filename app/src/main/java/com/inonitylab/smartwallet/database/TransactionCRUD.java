@@ -87,4 +87,49 @@ public class TransactionCRUD extends DBHelper {
         return transactionList;
     }
 
+    public ArrayList getBalanceStatement(String fromDate, String toDate, String accountType) {
+
+        db = this.getReadableDatabase();
+        ArrayList<String[]> report = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("select category_name , balance from (select * from categories where category_type = ?) " +
+                "left  join (" +
+                "select a.category_name,sum(b.amount) as balance " +
+                "from categories a, transactions b " +
+                "where b.date between ? and ?  and a.category_type = ? " +
+                "and a.category_id = b.category_id " +
+                "group by a.category_name) " +
+                "using(category_name) " +
+                "order by balance desc", new String[]{accountType, fromDate, toDate, accountType});
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                String statementRow[] = new String[2];
+                statementRow[0] = cursor.getString(cursor.getColumnIndex("category_name"));
+                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("balance")));
+                report.add(statementRow);
+               // Log.d("getBalanceStatement","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+            return report;
+        }
+        db.close();
+        return report;
+
+/*        select category_name , balance from (select * from categories where category_type = "Expense")
+        left  join (
+                select a.category_name,sum(b.amount) as balance
+        from categories a, transactions b
+        where b.date between  '2017/01/01' and  '2017/01/04' and a.category_type = 'Expense'
+        and a.category_id = b.category_id
+        group by a.category_name)
+        using(category_name)
+        order by balance desc*/
+
+    }
+
 }

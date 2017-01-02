@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new IncomeDashboardFragment(), "Income");
         adapter.addFrag(new ExpenseDashboardFragment(), "Expense");
+        adapter.addFrag(new IncomeDashboardFragment(), "Income");
         viewPager.setAdapter(adapter);
     }
 

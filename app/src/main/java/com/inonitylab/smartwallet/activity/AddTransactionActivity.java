@@ -145,15 +145,17 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void addTransaction() {
         TransactionCRUD transactionCRUD = new TransactionCRUD(this);
+        CategoriesCRUD categoriesCRUD = new CategoriesCRUD(this);
 
         Double amount = Double.valueOf(editTextAmount.getText().toString());
-       // int categoryId = spinnerCategory.getSelectedItemPosition();
+        int categoryId = categoriesCRUD.getCategoryId(category);
+        Log.d("....check ","...... id check "+categoryId);
         String date = textDate.getText().toString();
         String note = editTextNote.getText().toString();
 
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setAmount(amount);
-       // transactionModel.setCategoryId(categoryId);
+        transactionModel.setCategoryId(categoryId);
         transactionModel.setDate(date);
         transactionModel.setNote(note);
         transactionModel.setCategoryType(categoryType);

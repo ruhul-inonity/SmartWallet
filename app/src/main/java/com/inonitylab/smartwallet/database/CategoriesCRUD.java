@@ -159,4 +159,25 @@ public class CategoriesCRUD extends DBHelper {
         db.close();
         return expenseCategoryList;
     }
+
+    public int getCategoryId(String accountName) {
+        db = this.getReadableDatabase();
+        int categoryId;
+        try {
+            Cursor cursor = db.rawQuery("select category_id from categories where category_name = ?",
+                    new String[]{String.valueOf(accountName)});
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToPosition(0);
+                categoryId = cursor.getInt(0);
+                cursor.close();
+                db.close();
+                return categoryId;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+        return 0;
+    }
 }
