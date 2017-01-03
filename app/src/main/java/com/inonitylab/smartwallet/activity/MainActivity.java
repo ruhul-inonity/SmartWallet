@@ -12,16 +12,23 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.adapter.ReminderAdapter;
+import com.inonitylab.smartwallet.adapter.TransactionAdapter;
 import com.inonitylab.smartwallet.database.CategoriesCRUD;
 import com.inonitylab.smartwallet.database.SharedPrefDb;
+import com.inonitylab.smartwallet.database.TransactionCRUD;
 import com.inonitylab.smartwallet.fragment.FutureFragment;
 import com.inonitylab.smartwallet.fragment.IncomeDashboardFragment;
 import com.inonitylab.smartwallet.fragment.ExpenseDashboardFragment;
+import com.inonitylab.smartwallet.model.TransactionModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +37,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
 
 
+    ReminderAdapter reminderAdapter;
     SharedPrefDb sharedPrefDb;
     private Session session;
     private TabLayout tabLayout;
-  /*  private int[] tabIcons = {
-            R.drawable.ic_menu_camera,
-            R.drawable.ic_menu_camera,
-    };*/
+    private RecyclerView recyclerView;
+    ArrayList<TransactionModel> allRemindersList;
+
+    /*  private int[] tabIcons = {
+              R.drawable.ic_menu_camera,
+              R.drawable.ic_menu_camera,
+      };*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +106,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setDataAndPrepareAdapter();
+        //recycle view
+        recyclerView.setHasFixedSize(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(reminderAdapter);
     }
 
     @Override
@@ -106,7 +125,14 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+    private void setDataAndPrepareAdapter() {
+        TransactionCRUD transactionCRUD = new TransactionCRUD(this);
+        allRemindersList = transactionCRUD.getAllTransactions();
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_reminder);
+        reminderAdapter = new ReminderAdapter(allRemindersList);
 
+        reminderAdapter.notifyDataSetChanged();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,8 +176,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.activity_calendar) {
                 Intent intent = new Intent(getApplicationContext(), Calendar.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_Categories) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        } else if (id == R.id.activity_reminders) {
+                Intent intent = new Intent(getApplicationContext(), ReminderActivity.class);
                 startActivity(intent);
         } else if (id == R.id.activity_forecasts) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

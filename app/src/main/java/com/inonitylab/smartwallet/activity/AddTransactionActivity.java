@@ -32,9 +32,9 @@ public class AddTransactionActivity extends AppCompatActivity {
     Spinner spinnerRecurring;
     Spinner spinnerCategory;
     Button buttonAddTransaction;
-    String flag = "0";
     CheckBox recurringOption;
 
+    String flag = "0";
     private String amount,date,note,category,categoryType,recurring;
 
     final int DIALOG_ID = 1;

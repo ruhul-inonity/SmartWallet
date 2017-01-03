@@ -24,7 +24,8 @@
         <activity android:name=".activity.Help" />
         <activity android:name=".activity.Calendar" />
         <activity android:name=".activity.AddTransactionActivity" />
-        <activity android:name=".activity.PickCategoryActivity"></activity>
+        <activity android:name=".activity.PickCategoryActivity" />
+        <activity android:name=".activity.ReminderActivity"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ package com.inonitylab.smartwallet.model;
 public class TransactionModel {
     int _id,userId,categoryId,transactionId;
     Double amount;
-    String note,date,categoryType;
+    String note,date,categoryType,time;
 
     public TransactionModel(int userId, int categoryId, int transactionId,String categoryType ,Double amount, String note, String date) {
         this.userId = userId;
@@ -27,6 +27,14 @@ public class TransactionModel {
         this.note = note;
         this.date = date;
         this.categoryType = categoryType;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public TransactionModel() {

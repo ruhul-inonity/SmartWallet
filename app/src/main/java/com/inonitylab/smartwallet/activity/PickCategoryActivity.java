@@ -22,6 +22,9 @@ import java.util.List;
 public class PickCategoryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,IPickCategory {
 
     Bundle bundle;
+    String fromActivity = null;
+
+
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.ic_menu_camera,
@@ -33,6 +36,7 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
         setContentView(R.layout.activity_pick_category);
 
         bundle = getIntent().getExtras();
+        fromActivity = bundle.getString("fromActivity");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarPickCategory);
         setSupportActionBar(toolbar);
 
@@ -54,12 +58,21 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
     public void pickCategory(String category,String categoryType) {
         Toast.makeText(getApplicationContext(),category,Toast.LENGTH_LONG).show();
         if (!category.isEmpty()){
-            Intent intent = new Intent(PickCategoryActivity.this,AddTransactionActivity.class);
-            intent.putExtras(bundle);
-            intent.putExtra("category",category);
-            intent.putExtra("categoryType",categoryType);
-            intent.putExtra("flag","pickCategory");
-            startActivity(intent);
+            if (fromActivity.equals("Reminder")){
+                bundle.putString("category",category);
+                bundle.putString("categoryType",categoryType);
+                Intent intent = new Intent(PickCategoryActivity.this,ReminderActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(PickCategoryActivity.this,AddTransactionActivity.class);
+                intent.putExtras(bundle);
+                intent.putExtra("category",category);
+                intent.putExtra("categoryType",categoryType);
+                intent.putExtra("flag","pickCategory");
+                startActivity(intent);
+            }
+
         }
     }
 
