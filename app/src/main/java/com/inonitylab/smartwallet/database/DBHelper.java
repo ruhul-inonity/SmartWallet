@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_TRANSACTIONS = "transactions";
     public static final String TABLE_CATEGORIES = "categories";
     public static final String TABLE_REMINDERS = "reminders";
+    public static final String TABLE_BUDGETS = "budgets";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_USER_ID = "user_id";
@@ -70,6 +71,16 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_TIME + " TEXT" +
             ");";
 
+    private String CREATE_TABLE_BUDGETS = "create table " + TABLE_BUDGETS + "(" +
+            COLUMN_ID + " INTEGER PRIMARY KEY," +
+            COLUMN_USER_ID + " INTEGER," +
+            COLUMN_CATEGORY_NAME + " TEXT," +
+            COLUMN_CATEGORY_TYPE + " TEXT," +
+            COLUMN_AMOUNT + " DOUBLE," +
+            COLUMN_DATE + " TEXT," +
+            COLUMN_TIME + " TEXT" +
+            ");";
+
 
     public DBHelper(Context context) {  //explain this constructor and how it works with other activities.
         super(context, DB_NAME, null, DB_VERSION); //SQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
@@ -82,6 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TRANSACTIONS);
         db.execSQL(CREATE_TABLE_CATEGORIES);
         db.execSQL(CREATE_TABLE_REMINDERS);
+        db.execSQL(CREATE_TABLE_BUDGETS);
     }
 
 

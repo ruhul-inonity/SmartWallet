@@ -25,7 +25,9 @@
         <activity android:name=".activity.Calendar" />
         <activity android:name=".activity.AddTransactionActivity" />
         <activity android:name=".activity.PickCategoryActivity" />
-        <activity android:name=".activity.ReminderActivity"></activity>
+        <activity android:name=".activity.ReminderActivity" />
+        <activity android:name=".activity.BudgetActivity" />
+        <activity android:name=".activity.AddBudgetActivity"></activity>
     </application>
 
 </manifest>
