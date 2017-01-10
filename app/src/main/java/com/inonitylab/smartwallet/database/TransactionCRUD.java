@@ -140,6 +140,41 @@ public class TransactionCRUD extends DBHelper {
         return transactionList;
     }
 
+    public ArrayList<TransactionModel> getTransactionsByCategory(int categoryId) {
+        ArrayList<TransactionModel> transactionList = new ArrayList<TransactionModel>();
+        db = this.getReadableDatabase();
+        String query = "select * from transactions where category_id = ? order by date desc";
+        try {
+            Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(categoryId)});
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                    int trans_id = cursor.getInt(cursor.getColumnIndex(COLUMN_TRANSACTION_ID));
+                    int category_id = cursor.getInt(cursor.getColumnIndex(COLUMN_CATEGORY_ID));
+                    String category_type = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_TYPE));
+                    int user_id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+                    double amount = cursor.getDouble(cursor.getColumnIndex(COLUMN_AMOUNT));
+                    String note = cursor.getString(cursor.getColumnIndex(COLUMN_NOTE));
+                    String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
+
+                    TransactionModel transactionModel = new TransactionModel(id, user_id, category_id, trans_id, amount, note, date, category_type);
+
+                    transactionList.add(transactionModel);
+                    Log.d("all transaction data", "......................." + trans_id + category_type + " amount " + amount + " " + note + date);
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            } else
+
+                Log.d("All transaction db", "...................Cursor is empty");
+        } catch (Exception e) {
+            Log.e("All transaction db", "...............Exception  While Receiving Data From transactions " + e);
+        }
+        db.close();
+        return transactionList;
+    }
+
     //get all reminders
     public ArrayList<TransactionModel> getAllReminders() {
         ArrayList<TransactionModel> reminderList = new ArrayList<TransactionModel>();
@@ -153,12 +188,12 @@ public class TransactionCRUD extends DBHelper {
                     int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
                     int trans_id = cursor.getInt(cursor.getColumnIndex(COLUMN_TRANSACTION_ID));
                     int category_id = cursor.getInt(cursor.getColumnIndex(COLUMN_CATEGORY_ID));
-                    String category_type = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_TYPE));
                     int user_id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
                     double amount = cursor.getDouble(cursor.getColumnIndex(COLUMN_AMOUNT));
                     String note = cursor.getString(cursor.getColumnIndex(COLUMN_NOTE));
                     String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
                     String time = cursor.getString(cursor.getColumnIndex(COLUMN_TIME));
+                    String category_type = "";
 
                     TransactionModel transactionModel = new TransactionModel(id, user_id, category_id, trans_id, amount, note, date, category_type);
                     transactionModel.setTime(time);

@@ -110,6 +110,8 @@ public class ReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addReminder();
+                Intent intent = new Intent(ReminderActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
         try {

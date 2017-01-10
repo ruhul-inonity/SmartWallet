@@ -27,7 +27,8 @@
         <activity android:name=".activity.PickCategoryActivity" />
         <activity android:name=".activity.ReminderActivity" />
         <activity android:name=".activity.BudgetActivity" />
-        <activity android:name=".activity.AddBudgetActivity"></activity>
+        <activity android:name=".activity.AddBudgetActivity" />
+        <activity android:name=".activity.CategoryReportActivity"></activity>
     </application>
 
 </manifest>

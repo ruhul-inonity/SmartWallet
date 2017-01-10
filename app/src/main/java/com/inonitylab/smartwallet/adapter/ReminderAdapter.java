@@ -1,6 +1,7 @@
 package com.inonitylab.smartwallet.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Produc
         holder.amount.setText(String.valueOf(transactionModel.getAmount()));
         holder.note.setText(transactionModel.getNote());
         holder.time.setText(transactionModel.getTime());
-        //Log.d("blaaa","..................... "+transactionModel.getCategoryType());
+        Log.d("blaaa",transactionModel.getTime()+"..................... "+transactionModel.getCategoryType());
     }
 
     @Override
