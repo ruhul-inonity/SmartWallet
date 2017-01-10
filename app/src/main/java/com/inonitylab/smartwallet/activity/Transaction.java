@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.adapter.RecyclerTouchListener;
 import com.inonitylab.smartwallet.adapter.TransactionAdapter;
 import com.inonitylab.smartwallet.database.TransactionCRUD;
 import com.inonitylab.smartwallet.model.TransactionModel;
@@ -33,7 +36,17 @@ public class Transaction extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(transactionAdapter);
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                TransactionModel transactionModel = allTransactionsList.get(position);
+                Toast.makeText(getApplicationContext(), transactionModel.getNote() + " is selected!", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
     }
 
     private void setDataAndPrepareAdapter() {
