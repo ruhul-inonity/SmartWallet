@@ -88,7 +88,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         recurringTime.add("Weekly");
         recurringTime.add("Monthly");
         recurringAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_row_spinner, recurringTime);
-        categoryAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_row_spinner, categoryNames);
+        //categoryAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_row_spinner, categoryNames);
         spinnerRecurring.setAdapter(recurringAdapter);
        // spinnerCategory.setAdapter(categoryAdapter);
 
@@ -96,6 +96,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addTransaction();
+                Intent intent = new Intent(AddTransactionActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -110,6 +112,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
+                bundle.putString("fromActivity","addTransaction");
                 bundle.putString("amount",editTextAmount.getText().toString());
                 bundle.putString("date",textDate.getText().toString());
                 bundle.putString("note",editTextNote.getText().toString());

@@ -96,7 +96,7 @@ public class ReminderActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("fromActivity","Reminder");
                 bundle.putString("note",editReminderNote.getText().toString());
-                bundle.putString("amount",editReminderNote.getText().toString());
+                bundle.putString("amount",editReminderAmount.getText().toString());
                 bundle.putString("date",txtDate.getText().toString());
                 bundle.putString("category",txtCategory.getText().toString());
                 bundle.putString("repeat",spinnerRepeat.getSelectedItem().toString());
@@ -130,6 +130,24 @@ public class ReminderActivity extends AppCompatActivity {
                 }
             }
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Bundle pickedBundle = getIntent().getExtras();
+            categoryType = pickedBundle.getString("categoryType");
+            flag = pickedBundle.getString("flag");
+            Log.d("category and flag","............................"+flag + category);
+            if (!flag.isEmpty() && flag.equals("reminder")){
+
+                txtCategory.setText(pickedBundle.getString("category"));
+                editReminderAmount.setText(pickedBundle.getString("amount"));
+                txtDate.setText(pickedBundle.getString("date").toString());
+                editReminderNote.setText(pickedBundle.getString("note"));
+                Log.d("category and flag","............................"+flag + category+pickedBundle.getString("date"));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

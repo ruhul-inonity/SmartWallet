@@ -28,6 +28,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_PASSWORD = "u_password";
     public static final String COLUMN_AMOUNT = "amount";
     public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_FROM_DATE = "from_date";
+    public static final String COLUMN_TO_DATE = "to_date";
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_NOTE = "note";
 
@@ -77,7 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_CATEGORY_NAME + " TEXT," +
             COLUMN_CATEGORY_TYPE + " TEXT," +
             COLUMN_AMOUNT + " DOUBLE," +
-            COLUMN_DATE + " TEXT," +
+            COLUMN_FROM_DATE + " TEXT," +
+            COLUMN_TO_DATE + " TEXT," +
             COLUMN_TIME + " TEXT" +
             ");";
 

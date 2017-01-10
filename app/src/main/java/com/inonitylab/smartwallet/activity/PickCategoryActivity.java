@@ -22,7 +22,7 @@ import java.util.List;
 public class PickCategoryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,IPickCategory {
 
     Bundle bundle;
-    String fromActivity = null;
+    String fromActivity = "0";
 
 
     private TabLayout tabLayout;
@@ -61,6 +61,7 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
             if (fromActivity.equals("Reminder")){
                 bundle.putString("category",category);
                 bundle.putString("categoryType",categoryType);
+                bundle.putString("flag","reminder");
                 Intent intent = new Intent(PickCategoryActivity.this,ReminderActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

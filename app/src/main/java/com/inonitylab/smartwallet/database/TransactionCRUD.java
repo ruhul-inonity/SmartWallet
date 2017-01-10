@@ -76,6 +76,32 @@ public class TransactionCRUD extends DBHelper {
             return -1;
     }
 
+    //Insert into Pending Ledger transaction table
+    public long insertBudget(TransactionModel transaction) {
+
+        db = this.getWritableDatabase();
+        long result1 = 0;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_USER_ID, 0);
+            values.put(COLUMN_CATEGORY_NAME, transaction.getCategoryName());
+            values.put(COLUMN_AMOUNT, transaction.getAmount());
+            values.put(COLUMN_TO_DATE, transaction.getToDate());
+            values.put(COLUMN_FROM_DATE, transaction.getFromDate());
+            values.put(COLUMN_TIME, transaction.getTime());
+
+            result1 = db.insert(TABLE_BUDGETS, null, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.close();
+
+        if (result1 >= 0)
+            return 1;
+        else
+            return -1;
+    }
+
     //get all transactions
     public ArrayList<TransactionModel> getAllTransactions() {
         ArrayList<TransactionModel> transactionList = new ArrayList<TransactionModel>();
@@ -114,9 +140,9 @@ public class TransactionCRUD extends DBHelper {
         return transactionList;
     }
 
-    //get all transactions
+    //get all reminders
     public ArrayList<TransactionModel> getAllReminders() {
-        ArrayList<TransactionModel> transactionList = new ArrayList<TransactionModel>();
+        ArrayList<TransactionModel> reminderList = new ArrayList<TransactionModel>();
         db = this.getReadableDatabase();
         String query = "select * from reminders order by date desc";
         try {
@@ -139,19 +165,19 @@ public class TransactionCRUD extends DBHelper {
                     /*DecimalFormat df = new DecimalFormat("#");
                     df.setMaximumFractionDigits(8);*/
 
-                    transactionList.add(transactionModel);
-                    Log.d("all transaction data", "......................." + trans_id + category_type + " amount " + amount + " " + note + date);
+                    reminderList.add(transactionModel);
+                    Log.d("all reminder data", "......................." + trans_id + category_type + " amount " + amount + " " + note + date);
                     cursor.moveToNext();
                 }
                 cursor.close();
             } else
 
-                Log.d("All transaction db", "...................Cursor is empty");
+                Log.d("All reminder db", "...................Cursor is empty");
         } catch (Exception e) {
-            Log.e("All transaction db", "...............Exception  While Receiving Data From transactions " + e);
+            Log.e("All reminder db", "...............Exception  While Receiving Data From transactions " + e);
         }
         db.close();
-        return transactionList;
+        return reminderList;
     }
 
     public ArrayList getBalanceStatement(String fromDate, String toDate, String accountType) {
@@ -197,6 +223,26 @@ public class TransactionCRUD extends DBHelper {
         using(category_name)
         order by balance desc*/
 
+    }
+
+    public double getMaxBudget(String category){
+        db = this.getReadableDatabase();
+        double amount  = 0;
+
+        try {
+            Cursor cursor = db.rawQuery("select max(amount) from budgets where category_name = ? ",new String[]{category});
+            if (cursor!= null && cursor.getCount() > 0){
+                cursor.moveToPosition(0);
+                amount = cursor.getDouble(0);
+                cursor.close();
+            }else {
+                amount = 0;
+            }
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return amount;
     }
 
 }

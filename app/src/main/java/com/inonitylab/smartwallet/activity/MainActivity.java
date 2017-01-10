@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity
     }
     private void setDataAndPrepareAdapter() {
         TransactionCRUD transactionCRUD = new TransactionCRUD(this);
-        allRemindersList = transactionCRUD.getAllTransactions();
+        allRemindersList = new ArrayList<>();
+        allRemindersList = transactionCRUD.getAllReminders();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_reminder);
         reminderAdapter = new ReminderAdapter(allRemindersList);
 
@@ -173,8 +174,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.activity_transaction) {
                 Intent intent = new Intent(getApplicationContext(), Transaction.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_calendar) {
-                Intent intent = new Intent(getApplicationContext(), Calendar.class);
+        } else if (id == R.id.activity_budgets) {
+                Intent intent = new Intent(getApplicationContext(), BudgetActivity.class);
                 startActivity(intent);
         } else if (id == R.id.activity_reminders) {
                 Intent intent = new Intent(getApplicationContext(), ReminderActivity.class);
