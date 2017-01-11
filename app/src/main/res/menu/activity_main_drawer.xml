@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_dashboard"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/activity_transaction"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Transaction" />
+        <item
+            android:id="@+id/activity_budgets"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Budgets" />
+        <item
+            android:id="@+id/activity_reminders"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Reminders" />
+        <item
+            android:id="@+id/activity_Categories"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Categories" />
+        <item
+            android:id="@+id/activity_calendar"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/activity_forecasts"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Forecasts" />
+        <item
+            android:id="@+id/activity_suggestions"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Suggestions" />
+        <item
+            android:id="@+id/activity_help"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Help" />
+    </group>
+
+    <item android:title="Actions">
+        <menu>
+            <item
+                android:id="@+id/activity_logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
