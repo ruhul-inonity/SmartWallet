@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+=======
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+>>>>>>> 7d2015bce2153a91352f292d535fcd79d1fdb6e4
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
@@ -34,12 +40,32 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+=======
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+=======
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+>>>>>>> a596632fc428a770d12c645152c1cb4b10a4a95d
+>>>>>>> 2f4c9e5726594f32d22df17adb0711097bee7cc4
+>>>>>>> 7d2015bce2153a91352f292d535fcd79d1fdb6e4
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 2f4c9e5726594f32d22df17adb0711097bee7cc4
+>>>>>>> 7d2015bce2153a91352f292d535fcd79d1fdb6e4
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
@@ -56,4 +82,11 @@
       </state>
     </states>
   </component>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> a596632fc428a770d12c645152c1cb4b10a4a95d
+>>>>>>> 2f4c9e5726594f32d22df17adb0711097bee7cc4
+>>>>>>> 7d2015bce2153a91352f292d535fcd79d1fdb6e4
 </project>

@@ -280,4 +280,32 @@ public class TransactionCRUD extends DBHelper {
         return amount;
     }
 
+    public ArrayList getIncomeSum() {
+
+        db = this.getReadableDatabase();
+        ArrayList<String[]> report = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("select date, sum(amount) from transactions where category_type = 'Expense' group by date", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                String statementRow[] = new String[2];
+                statementRow[0] = cursor.getString(cursor.getColumnIndex("date"));
+                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("sum(amount)")));
+                report.add(statementRow);
+                 Log.d("getIncomeSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+            return report;
+        }
+        db.close();
+        return report;
+
+
+    }
+
 }

@@ -110,11 +110,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addUser(String email, String password){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues(); //input values into database
+        ContentValues values = new ContentValues();
         values.put(COLUMN_USER_EMAIL, email);
         values.put(COLUMN_USER_PASSWORD, password);
 
-        long id = db.insert(TABLE_USERS,null, values); //inserting
+        long id = db.insert(TABLE_USERS,null, values);
         db.close();
 
     }
@@ -126,8 +126,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst(); //goes to the top row
-        if(cursor.getCount() >0){ //returns the number of rows in the cursor.
+        cursor.moveToFirst();
+        if(cursor.getCount() >0){
             return true;
         }
         cursor.close();
