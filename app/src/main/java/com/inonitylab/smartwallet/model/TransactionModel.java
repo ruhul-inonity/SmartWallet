@@ -1,10 +1,12 @@
 package com.inonitylab.smartwallet.model;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 12/28/16.
  */
 
-public class TransactionModel {
+public class TransactionModel implements Serializable {
     int _id,userId,categoryId,transactionId;
     Double amount;
     String note,date,categoryType,categoryName,time;

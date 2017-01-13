@@ -4,7 +4,6 @@
     android:id="@+id/activity_add_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
 
 
@@ -14,23 +13,15 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-<!--        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/editTextUpdateTransactionAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp">-->
-
-
-            <EditText
-                android:id="@+id/editTextTransactionAmount"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Enter Amount"
-                android:inputType="phone"
-                android:textSize="25sp"
-                android:textStyle="bold"  />
-      <!--  </android.support.design.widget.TextInputLayout>-->
+            android:hint="Enter Amount"
+            android:inputType="phone"
+            android:textSize="25sp"
+            android:textStyle="bold"  />
+        <!--  </android.support.design.widget.TextInputLayout>-->
 
     </LinearLayout>
 
@@ -46,7 +37,7 @@
             android:background="@drawable/ic_calender_black_24dp"/>
 
         <TextView
-            android:id="@+id/textDateSelect"
+            android:id="@+id/textDateUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -74,7 +65,7 @@
             android:background="@drawable/ic_calender_black_24dp"/>
 
         <EditText
-            android:id="@+id/textNote"
+            android:id="@+id/textUpdateNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -99,7 +90,7 @@
             android:background="@drawable/ic_category_24dp"/>
 
         <TextView
-            android:id="@+id/textCategorySelect"
+            android:id="@+id/textUpdateCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -109,19 +100,19 @@
             android:textStyle="bold"
             android:text="Select Category"/>
 
-<!--        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="Category:"/>
+        <!--        <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Category:"/>
 
-        <Spinner
-            android:id="@+id/spinnerCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </Spinner>-->
+                </Spinner>-->
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -139,13 +130,13 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:padding="5dp"
-            android:id="@+id/transaction_checkbox_recurringOption"
+            android:id="@+id/transaction_checkbox_Update"
             android:text="Recurring Transaction?"/>
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_margin="10dp"
-            android:id="@+id/spinner_transaction_Recurring"
+            android:id="@+id/spinner_transaction_RecurringUpdate"
             android:layout_height="wrap_content"
             android:visibility="gone">
         </Spinner>
@@ -158,11 +149,11 @@
         android:layout_marginBottom="5dp"
         android:background="@color/colorPrimary"/>
 
-<Button
-    android:id="@+id/buttonAddTransaction"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Add Transaction"/>
+    <Button
+        android:id="@+id/buttonUpdateTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"/>
 
 
 </LinearLayout>

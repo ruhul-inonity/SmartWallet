@@ -182,14 +182,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.activity_reminders) {
                 Intent intent = new Intent(getApplicationContext(), ReminderActivity.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_forecasts) {
+        } else if (id == R.id.activity_Categories) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_help) {
+        } else if (id == R.id.activity_calendar) {
                 Intent intent = new Intent(getApplicationContext(), Help.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_reminders) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        } else if (id == R.id.activity_forecasts) {
+                Intent intent = new Intent(getApplicationContext(), ForecastActivity.class);
                 startActivity(intent);
         } else if (id == R.id.activity_suggestions) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

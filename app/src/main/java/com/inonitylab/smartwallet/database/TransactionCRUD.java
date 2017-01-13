@@ -49,6 +49,33 @@ public class TransactionCRUD extends DBHelper {
             return -1;
     }
 
+    public long updateTransaction(TransactionModel transaction) {
+
+        db = this.getWritableDatabase();
+        long result1 = 0;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_TRANSACTION_ID, 0);
+            values.put(COLUMN_CATEGORY_ID, transaction.getCategoryId());
+            values.put(COLUMN_USER_ID, transaction.getUserId());
+            values.put(COLUMN_CATEGORY_TYPE, transaction.getCategoryType());
+            values.put(COLUMN_AMOUNT, transaction.getAmount());
+            values.put(COLUMN_NOTE, transaction.getNote());
+            values.put(COLUMN_DATE, transaction.getDate());
+
+            result1 = db.update(TABLE_TRANSACTIONS, values, COLUMN_ID + " = ?" ,new String[transaction.get_id()]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.close();
+
+        if (result1 >= 0)
+            return 1;
+        else
+            return -1;
+    }
+
+
     //Insert into Pending Ledger transaction table
     public long insertReminder(TransactionModel transaction) {
 
@@ -285,6 +312,32 @@ public class TransactionCRUD extends DBHelper {
         db = this.getReadableDatabase();
         ArrayList<String[]> report = new ArrayList<>();
 
+        Cursor cursor = db.rawQuery("select date, sum(amount) from transactions where category_type = 'Income' group by date", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                String statementRow[] = new String[2];
+                statementRow[0] = cursor.getString(cursor.getColumnIndex("date"));
+                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("sum(amount)")));
+                report.add(statementRow);
+                Log.d("getIncomeSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+            return report;
+        }
+        db.close();
+        return report;
+    }
+
+    public ArrayList getExpenseSum() {
+
+        db = this.getReadableDatabase();
+        ArrayList<String[]> report = new ArrayList<>();
+
         Cursor cursor = db.rawQuery("select date, sum(amount) from transactions where category_type = 'Expense' group by date", null);
 
         if (cursor != null && cursor.getCount() > 0) {
@@ -295,7 +348,7 @@ public class TransactionCRUD extends DBHelper {
                 statementRow[0] = cursor.getString(cursor.getColumnIndex("date"));
                 statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("sum(amount)")));
                 report.add(statementRow);
-                 Log.d("getIncomeSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+                Log.d("getExpenseSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
             }
             while (cursor.moveToNext());
             cursor.close();
@@ -304,8 +357,6 @@ public class TransactionCRUD extends DBHelper {
         }
         db.close();
         return report;
-
-
     }
 
 }

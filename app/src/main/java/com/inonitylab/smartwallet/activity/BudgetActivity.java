@@ -38,6 +38,7 @@ public class BudgetActivity extends AppCompatActivity {
     TextView txtFromDate,txtToDate;
     TextView txtSpentAmount,txtMaxAmount;
     Button buttonSaveBudget,buttonWatchBudgetReport;
+    LinearLayout linearLayoutBudgetEntry;
     ArrayAdapter<String> categoryAdapter,categoryBudgetAdapter;
     ArrayList<String> categoryNames = new ArrayList<>();
     ArrayList<Categories> allCategories = new ArrayList<>();
@@ -103,7 +104,7 @@ public class BudgetActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinearLayout linearLayoutBudgetEntry = (LinearLayout) findViewById(R.id.linearLayoutAddCategory);
+               linearLayoutBudgetEntry = (LinearLayout) findViewById(R.id.linearLayoutAddCategory);
                 linearLayoutBudgetEntry.setVisibility(View.VISIBLE);
             }
         });
@@ -212,5 +213,6 @@ public class BudgetActivity extends AppCompatActivity {
         if (a == 1){
             Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_LONG).show();
         }
+        linearLayoutBudgetEntry.setVisibility(View.GONE);
     }
 }

@@ -29,7 +29,8 @@
         <activity android:name=".activity.BudgetActivity" />
         <activity android:name=".activity.AddBudgetActivity" />
         <activity android:name=".activity.CategoryReportActivity" />
-        <activity android:name=".activity.ForecastActivity"></activity>
+        <activity android:name=".activity.ForecastActivity" />
+        <activity android:name=".activity.UpdateTransaction"></activity>
     </application>
 
 </manifest>

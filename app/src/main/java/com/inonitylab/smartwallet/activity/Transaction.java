@@ -1,5 +1,6 @@
 package com.inonitylab.smartwallet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -40,7 +41,11 @@ public class Transaction extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 TransactionModel transactionModel = allTransactionsList.get(position);
-                Toast.makeText(getApplicationContext(), transactionModel.getNote() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Transaction.this,UpdateTransaction.class);
+                intent.putExtra("transFlag","trans");
+                intent.putExtra("transaction",transactionModel);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), transactionModel.getNote() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
