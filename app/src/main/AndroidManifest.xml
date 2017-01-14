@@ -31,6 +31,7 @@
         <activity android:name=".activity.CategoryReportActivity" />
         <activity android:name=".activity.ForecastActivity" />
         <activity android:name=".activity.UpdateTransaction"></activity>
+        <receiver android:name=".Scheduler.MyReceiver" />
     </application>
 
 </manifest>

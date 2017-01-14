@@ -1,7 +1,9 @@
 package com.inonitylab.smartwallet.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.inonitylab.smartwallet.R;
+import com.inonitylab.smartwallet.Scheduler.MyReceiver;
 import com.inonitylab.smartwallet.database.CategoriesCRUD;
 import com.inonitylab.smartwallet.database.TransactionCRUD;
 import com.inonitylab.smartwallet.model.TransactionModel;
@@ -34,17 +37,22 @@ public class ReminderActivity extends AppCompatActivity {
     CheckBox checkIsRepeat;
     Button button;
     Spinner spinnerRepeat;
+    Calendar c;
 
     ArrayAdapter<String> repeatAdapter;
     ArrayList<String> repeatTime = new ArrayList<>();
 
     String flag = "0";
     private int mHour, mMinute;
+    private int scheduleHour,scheduleMinute;
+    private int scheduleYear,scheduleMonth,scheduleDay;
+    private int schedulerId;
     private String amount,date,note,category,categoryType,recurring;
     private String  selectedMonth, selectedDay,selectedYear;
     final int DIALOG_ID_DATE = 1;
     final int DIALOG_ID_TIME = 2;
     int year, month, day;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,11 +164,14 @@ public class ReminderActivity extends AppCompatActivity {
         }
     }
     private void setDefaultTime() {
-        Calendar c;
-        c = java.util.Calendar.getInstance();
-        mHour = c.get(java.util.Calendar.HOUR_OF_DAY);
-        mMinute = c.get(java.util.Calendar.MINUTE);
+        c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
 
+        scheduleHour = mHour+1;
+        scheduleMinute = mMinute;
+
+       // transactionTime = scheduleHour + ":" + scheduleMinute;
     }
 
     private void inputTime() {
@@ -173,6 +184,8 @@ public class ReminderActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
+                        scheduleHour = hourOfDay;
+                        scheduleMinute = minute;
                         txtTime.setText(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
@@ -201,6 +214,7 @@ public class ReminderActivity extends AppCompatActivity {
 
         long flag =   transactionCRUD.insertReminder(transactionModel);
         if (flag>0){
+            setSchedule();
             Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
         }
 
@@ -223,8 +237,11 @@ public class ReminderActivity extends AppCompatActivity {
                     } else
                         selectedDay = String.valueOf(day);
                     selectedYear = String.valueOf(year);
+                    scheduleYear = year;
+                    scheduleMonth = month-1;
+                    scheduleDay = day;
                     date = selectedYear + "/" + selectedMonth + "/" + selectedDay;
-                    Log.d("Date picker,vou.ent","............................ date:"+date+" schedule:"+selectedDay+" "+selectedMonth+" "+selectedYear);
+                    Log.d("Date picker","............................ date:"+date+" schedule:"+selectedDay+" "+selectedMonth+" "+selectedYear);
                     txtDate.setText(date);
                 }
             };
@@ -237,7 +254,9 @@ public class ReminderActivity extends AppCompatActivity {
             selectedMonth = "0" + String.valueOf(month);
         } else
             selectedMonth = String.valueOf(month);
-
+        scheduleYear = year;
+        scheduleMonth = month-1;
+        scheduleDay = day;
 
         day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
         if (day < 10) {
@@ -248,5 +267,25 @@ public class ReminderActivity extends AppCompatActivity {
         if (id == DIALOG_ID_DATE)
             return new DatePickerDialog(this, dpListener, year, month-1, day);
         return null;
+    }
+
+    public void setSchedule(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, scheduleMonth);
+        calendar.set(Calendar.YEAR, scheduleYear);
+        calendar.set(Calendar.DAY_OF_MONTH, scheduleDay);
+
+        calendar.set(Calendar.HOUR_OF_DAY, scheduleHour);
+        calendar.set(Calendar.MINUTE, scheduleMinute);
+        calendar.set(Calendar.SECOND, 0);
+        //  calendar.set(Calendar.AM, Calendar.PM);
+
+        Intent myIntent = new Intent(ReminderActivity.this, MyReceiver.class);
+        myIntent.putExtra("schedulerId",schedulerId);
+        pendingIntent = PendingIntent.getBroadcast(ReminderActivity.this, schedulerId, myIntent, 0);
+
+        Log.d("Final scheduler time"," ..................."+scheduleYear+" "+scheduleMonth+" "+scheduleDay +" time:"+scheduleHour+" "+scheduleMinute +" scheduler id "+schedulerId);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
     }
 }

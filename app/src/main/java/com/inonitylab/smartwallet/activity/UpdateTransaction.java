@@ -63,7 +63,9 @@ public class UpdateTransaction extends AppCompatActivity {
         spinnerRecurring = (Spinner) findViewById(R.id.spinner_transaction_RecurringUpdate);
         buttonUpdateTransaction = (Button) findViewById(R.id.buttonUpdateTransaction);
 
-        if (getIntent().getStringExtra("transFlag").equals("trans")){
+
+        flag = getIntent().getExtras().getString("flag");
+        if (String.valueOf(getIntent().getStringExtra("transFlag")).equals("trans")){
 
             transactionModel = (TransactionModel) getIntent().getSerializableExtra("transaction");
             editTextAmount.setText(String.valueOf(transactionModel.getAmount()));
@@ -75,10 +77,9 @@ public class UpdateTransaction extends AppCompatActivity {
             try {
                 category = getIntent().getExtras().getString("category");
                 categoryType = getIntent().getExtras().getString("categoryType");
-                flag = getIntent().getExtras().getString("flag");
                 Log.d("category and flag", "............................" + flag + category);
                 textCategory.setText(category);
-                if (!flag.isEmpty() && flag.equals("pickCategory")) {
+                if (!flag.isEmpty() && flag.equals("updateCategory")) {
 
                     Bundle pickedBundle = getIntent().getExtras();
                     editTextAmount.setText(pickedBundle.getString("amount"));

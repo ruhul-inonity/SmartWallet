@@ -19,7 +19,7 @@ import com.inonitylab.smartwallet.model.IPickCategory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickCategoryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,IPickCategory {
+public class PickCategoryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, IPickCategory {
 
     Bundle bundle;
     String fromActivity = "0";
@@ -30,6 +30,7 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
             R.drawable.ic_menu_camera,
             R.drawable.ic_menu_camera,
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +56,30 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
 
     //implemented method from IPickCategory interface
     @Override
-    public void pickCategory(String category,String categoryType) {
-        Toast.makeText(getApplicationContext(),category,Toast.LENGTH_LONG).show();
-        if (!category.isEmpty()){
-            if (fromActivity.equals("Reminder")){
-                bundle.putString("category",category);
-                bundle.putString("categoryType",categoryType);
-                bundle.putString("flag","reminder");
-                Intent intent = new Intent(PickCategoryActivity.this,ReminderActivity.class);
+    public void pickCategory(String category, String categoryType) {
+        Toast.makeText(getApplicationContext(), category, Toast.LENGTH_LONG).show();
+        if (!category.isEmpty()) {
+            if (fromActivity.equals("Reminder")) {
+                bundle.putString("category", category);
+                bundle.putString("categoryType", categoryType);
+                bundle.putString("flag", "reminder");
+                Intent intent = new Intent(PickCategoryActivity.this, ReminderActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-            }else{
-                Intent intent = new Intent(PickCategoryActivity.this,AddTransactionActivity.class);
+            } else if (fromActivity.equals("updateTransaction")) {
+                Intent intent = new Intent(PickCategoryActivity.this,UpdateTransaction.class);
                 intent.putExtras(bundle);
-                intent.putExtra("category",category);
-                intent.putExtra("categoryType",categoryType);
-                intent.putExtra("flag","pickCategory");
+                intent.putExtra("category", category);
+                intent.putExtra("categoryType", categoryType);
+                intent.putExtra("flag", "updateCategory");
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(PickCategoryActivity.this, AddTransactionActivity.class);
+                intent.putExtras(bundle);
+                intent.putExtra("category", category);
+                intent.putExtra("categoryType", categoryType);
+                intent.putExtra("flag", "pickCategory");
                 startActivity(intent);
             }
 
@@ -106,7 +115,6 @@ public class PickCategoryActivity extends AppCompatActivity implements ViewPager
     public void onPageScrollStateChanged(int state) {
 
     }
-
 
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
