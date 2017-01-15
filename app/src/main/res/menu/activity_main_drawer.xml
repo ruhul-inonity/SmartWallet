@@ -35,6 +35,10 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Suggestions" />
         <item
+            android:id="@+id/activity_monthly_report"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Report" />
+        <item
             android:id="@+id/activity_help"
             android:icon="@drawable/ic_menu_manage"
             android:title="Help" />

@@ -194,7 +194,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.activity_suggestions) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-        } else if (id == R.id.activity_transaction) {
+        }
+        else if (id == R.id.activity_monthly_report) {
+            Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.activity_transaction) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }

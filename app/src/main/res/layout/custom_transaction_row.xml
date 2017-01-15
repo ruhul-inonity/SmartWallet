@@ -7,12 +7,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/txtDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:padding="5dp"
@@ -34,34 +37,111 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtCategory"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:paddingBottom="5dp"
-                android:textStyle="italic"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:textColor="@android:color/black"
-                android:text="Category"/>
-            <TextView
-                android:id="@+id/txtNote"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtCategoryNameDefault"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@android:color/black"
+                    android:text="Category:"/>
+
+                <TextView
+                    android:id="@+id/txtCategoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="Category Name"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtCategoryDefault"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@android:color/black"
+                    android:text="Type: "/>
+
+                <TextView
+                    android:id="@+id/txtCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="Category Type"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:textSize="15sp"
-                android:layout_marginStart="20dp"
-                android:textColor="@android:color/black"
-                android:text="Note"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtNotedefault"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@android:color/black"
+                    android:text="Note: "/>
+
+                <TextView
+                    android:id="@+id/txtNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="Note"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2">
-
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtAmountdefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:paddingBottom="5dp"
+                android:textStyle="italic"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@android:color/black"
+                android:text="Amount"/>
             <TextView
                 android:id="@+id/txtAmount"
                 android:layout_width="match_parent"

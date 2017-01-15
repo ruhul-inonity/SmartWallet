@@ -30,8 +30,11 @@
         <activity android:name=".activity.AddBudgetActivity" />
         <activity android:name=".activity.CategoryReportActivity" />
         <activity android:name=".activity.ForecastActivity" />
-        <activity android:name=".activity.UpdateTransaction"></activity>
+        <activity android:name=".activity.UpdateTransaction" />
+
         <receiver android:name=".Scheduler.MyReceiver" />
+
+        <activity android:name=".activity.ReportActivity"></activity>
     </application>
 
 </manifest>

@@ -31,16 +31,18 @@ public class UpdateTransaction extends AppCompatActivity {
     CheckBox checkRecurring;
     Spinner spinnerRecurring;
     Spinner spinnerCategory;
-    Button buttonUpdateTransaction;
+    Button buttonUpdateTransaction, buttonDeleteTransaction;
     CheckBox recurringOption;
     TransactionModel transactionModel;
 
     String flag = "0";
+
     private String amount,date,note,category,categoryType,recurring;
 
     final int DIALOG_ID = 10;
     int year, month, day;
     String  selectedMonth, selectedDay,selectedYear;
+    int transId;
 
     ArrayAdapter<String> recurringAdapter,categoryAdapter;
     ArrayList<String> recurringTime = new ArrayList<>();
@@ -62,24 +64,35 @@ public class UpdateTransaction extends AppCompatActivity {
         checkRecurring = (CheckBox) findViewById(R.id.transaction_checkbox_Update);
         spinnerRecurring = (Spinner) findViewById(R.id.spinner_transaction_RecurringUpdate);
         buttonUpdateTransaction = (Button) findViewById(R.id.buttonUpdateTransaction);
+        buttonDeleteTransaction = (Button) findViewById(R.id.buttonDeleteTransaction);
 
+        String transflag = "0";
 
-        flag = getIntent().getExtras().getString("flag");
-        if (String.valueOf(getIntent().getStringExtra("transFlag")).equals("trans")){
+        try {
+            transflag = getIntent().getStringExtra("transFlag");
+        } catch (Exception e){
+            Log.d("TAG", e+"");
+        }
+        Log.d("TAG", "......................."+transflag);
+        if (String.valueOf(transflag).equals("trans")){
 
             transactionModel = (TransactionModel) getIntent().getSerializableExtra("transaction");
+            transId = transactionModel.get_id();
             editTextAmount.setText(String.valueOf(transactionModel.getAmount()));
-            textDate.setText(transactionModel.getTime());
+            textDate.setText(transactionModel.getDate());
             editTextNote.setText(transactionModel.getNote());
-            textCategory.setText(transactionModel.getCategoryName());
+            textCategory.setText(getIntent().getStringExtra("categoryName"));
+            Log.d("TAGGG","______________----------------------____________ transaction categoryName: "+transactionModel.getCategoryName());
         }else {
             // Intent intent = new Intent();
             try {
                 category = getIntent().getExtras().getString("category");
                 categoryType = getIntent().getExtras().getString("categoryType");
+                transId = Integer.parseInt(getIntent().getExtras().getString("transID"));
+                flag = getIntent().getExtras().getString("flag");
                 Log.d("category and flag", "............................" + flag + category);
                 textCategory.setText(category);
-                if (!flag.isEmpty() && flag.equals("updateCategory")) {
+                if (!flag.isEmpty() && flag.equals("pickCategory")) {
 
                     Bundle pickedBundle = getIntent().getExtras();
                     editTextAmount.setText(pickedBundle.getString("amount"));
@@ -95,6 +108,7 @@ public class UpdateTransaction extends AppCompatActivity {
         }
 
 
+
         recurringTime.add("Daily");
         recurringTime.add("Weekly");
         recurringTime.add("Monthly");
@@ -107,6 +121,15 @@ public class UpdateTransaction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateTransaction();
+                Intent intent = new Intent(UpdateTransaction.this,Transaction.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonDeleteTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTransaction();
                 Intent intent = new Intent(UpdateTransaction.this,Transaction.class);
                 startActivity(intent);
             }
@@ -128,6 +151,7 @@ public class UpdateTransaction extends AppCompatActivity {
                 bundle.putString("date",textDate.getText().toString());
                 bundle.putString("note",editTextNote.getText().toString());
                 bundle.putString("category",textCategory.getText().toString());
+                bundle.putString("transID", String.valueOf(transId));
                 Intent intent = new Intent(UpdateTransaction.this,PickCategoryActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -170,6 +194,7 @@ public class UpdateTransaction extends AppCompatActivity {
         transactionModel.setCategoryId(categoryId);
         transactionModel.setDate(date);
         transactionModel.setNote(note);
+        transactionModel.set_id(transId);
         transactionModel.setCategoryType(categoryType);
 
         long flag =   transactionCRUD.updateTransaction(transactionModel);
@@ -177,6 +202,15 @@ public class UpdateTransaction extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Successfully updated",Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void deleteTransaction(){
+        TransactionCRUD transactionCRUD = new TransactionCRUD(this);
+
+        long flag =   transactionCRUD.deleteTransaction(transId);
+        if (flag>0){
+            Toast.makeText(getApplicationContext(),"Successfully deleted",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private DatePickerDialog.OnDateSetListener dpListener =

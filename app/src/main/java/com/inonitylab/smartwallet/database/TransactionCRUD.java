@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.inonitylab.smartwallet.model.ReportModel;
 import com.inonitylab.smartwallet.model.TransactionModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import static android.R.attr.accountType;
 
 /**
  * Created by ruhul on 12/28/16.
@@ -242,48 +245,42 @@ public class TransactionCRUD extends DBHelper {
         return reminderList;
     }
 
-    public ArrayList getBalanceStatement(String fromDate, String toDate, String accountType) {
+
+
+    public ArrayList <ReportModel> getReport(String fromDate, String catType) {
 
         db = this.getReadableDatabase();
-        ArrayList<String[]> report = new ArrayList<>();
+        ArrayList<ReportModel> reportList = new ArrayList<ReportModel>();
 
-        Cursor cursor = db.rawQuery("select category_name , balance from (select * from categories where category_type = ?) " +
-                "left  join (" +
-                "select a.category_name,sum(b.amount) as balance " +
-                "from categories a, transactions b " +
-                "where b.date between ? and ?  and a.category_type = ? " +
-                "and a.category_id = b.category_id " +
-                "group by a.category_name) " +
-                "using(category_name) " +
-                "order by balance desc", new String[]{accountType, fromDate, toDate, accountType});
+        Cursor cursor = db.rawQuery("select category_name , balance" +
+                " from (select * from categories where category_type = ?)" +
+                " left  join (" +
+                " select a.category_name,sum(b.amount) as balance, strftime(\"%m-%Y\", date) as 'month-year'" +
+                " from categories a, transactions b" +
+                " where a.category_type = ?" +
+                " and a.category_id = b.category_id" +
+                " and strftime(\"%m-%Y\", date) = ?" +
+                " group by a.category_name)" +
+                " using(category_name)" +
+                " order by balance desc", new String[]{catType, catType,fromDate});
 
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                String category= cursor.getString(cursor.getColumnIndex("category_name"));
+                Double amount = cursor.getDouble(cursor.getColumnIndex("balance"));
+                ReportModel reportModel = new ReportModel(category,amount);
 
-            do {
-                String statementRow[] = new String[2];
-                statementRow[0] = cursor.getString(cursor.getColumnIndex("category_name"));
-                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("balance")));
-                report.add(statementRow);
-               // Log.d("getBalanceStatement","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+                reportList.add(reportModel);
+                Log.d("all report", "......................." + category + " amount " + amount);
+                cursor.moveToNext();
             }
-            while (cursor.moveToNext());
             cursor.close();
-            db.close();
-            return report;
-        }
-        db.close();
-        return report;
+        } else
+            Log.d("All reminder db", "...................Cursor is empty");
 
-/*        select category_name , balance from (select * from categories where category_type = "Expense")
-        left  join (
-                select a.category_name,sum(b.amount) as balance
-        from categories a, transactions b
-        where b.date between  '2017/01/01' and  '2017/01/04' and a.category_type = 'Expense'
-        and a.category_id = b.category_id
-        group by a.category_name)
-        using(category_name)
-        order by balance desc*/
+        db.close();
+        return reportList;
 
     }
 
@@ -307,22 +304,152 @@ public class TransactionCRUD extends DBHelper {
         return amount;
     }
 
-    public ArrayList getIncomeSum() {
+
+    public ArrayList<TransactionModel> getCorrespondingCategoryNames() {
+        ArrayList<TransactionModel> categoryNames = new ArrayList<TransactionModel>();
+        db = this.getReadableDatabase();
+        String query = "select category_name from categories, transactions where categories.category_id = transactions.category_id";
+        try {
+            Cursor cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    String category_name = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME));
+
+                    TransactionModel transactionModel = new TransactionModel();
+                    transactionModel.setCategoryName(category_name);
+
+
+                    categoryNames.add(transactionModel);
+                    Log.d("all transaction data", "......................." + category_name);
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            } else
+
+                Log.d("All transaction db", "...................Cursor is empty");
+        } catch (Exception e) {
+            Log.e("All transaction db", "...............Exception  While Receiving Data From transactions " + e);
+        }
+        db.close();
+        return categoryNames;
+    }
+
+
+    public ArrayList getBalanceStatement(String fromDate, String toDate, String accountType) {
 
         db = this.getReadableDatabase();
         ArrayList<String[]> report = new ArrayList<>();
 
-        Cursor cursor = db.rawQuery("select date, sum(amount) from transactions where category_type = 'Income' group by date", null);
+        Cursor cursor = db.rawQuery("select category_name , balance from (select * from categories where category_type = ?) " +
+                "left  join (" +
+                "select a.category_name,sum(b.amount) as balance " +
+                "from categories a, transactions b " +
+                "where b.date between ? and ?  and a.category_type = ? " +
+                "and a.category_id = b.category_id " +
+                "group by a.category_name) " +
+                "using(category_name) " +
+                "order by balance desc", new String[]{accountType, fromDate, toDate, accountType});
 
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
             do {
                 String statementRow[] = new String[2];
-                statementRow[0] = cursor.getString(cursor.getColumnIndex("date"));
-                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("sum(amount)")));
+                statementRow[0] = cursor.getString(cursor.getColumnIndex("category_name"));
+                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("balance")));
                 report.add(statementRow);
-                Log.d("getIncomeSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+                // Log.d("getBalanceStatement","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+            return report;
+        }
+        db.close();
+        return report;
+
+/*        select category_name , balance from (select * from categories where category_type = "Expense")
+        left  join (
+                select a.category_name,sum(b.amount) as balance
+        from categories a, transactions b
+        where b.date between  '2017/01/01' and  '2017/01/04' and a.category_type = 'Expense'
+        and a.category_id = b.category_id
+        group by a.category_name)
+        using(category_name)
+        order by balance desc*/
+
+    }
+
+
+    public ArrayList getIncome() {
+
+        db = this.getReadableDatabase();
+        ArrayList<Double> report = new ArrayList<>();
+
+//        db.rawQuery("update transactions set date = REPLACE(date, '/', '-')", null);
+//        Log.d("TAG", "-------- update complete");
+        String q = "update transactions set date = REPLACE(date, ?, ?)";
+        Cursor cursora = db.rawQuery(q, new String[] { "/", "-" });
+        if(cursora !=null){
+            Log.d("TAG","------------------------ cursur not null man!!");
+        } else Log.d("TAG", "---------------CURSOR NULL!!!");
+
+        Cursor cursor = db.rawQuery("select SUM(amount), strftime(\"%m-%Y\", date) as 'month-year' \n" +
+                "       from transactions where category_type = 'Income' group by strftime(\"%m-%Y\", date)", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                Double statementRow;
+
+                statementRow = cursor.getDouble(cursor.getColumnIndex("SUM(amount)"));
+                report.add(statementRow);
+                Log.d("getIncome","........................... balance "+statementRow);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+
+            return report;
+        }
+
+        db.close();
+        return report;
+    }
+
+    public long deleteTransaction(int transId){
+        db = this.getWritableDatabase();
+        long result = 0;
+        try {
+            result = db.delete(TABLE_TRANSACTIONS, COLUMN_ID + "=?", new String[]{String.valueOf(transId)});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.close();
+
+        if (result >= 0)
+            return 1;
+        else
+            return -1;
+    }
+    public ArrayList getExpense() {
+
+        db = this.getReadableDatabase();
+        ArrayList<Double> report = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("select SUM(amount), strftime(\"%m-%Y\", date) as 'month-year' \n" +
+                "       from transactions where category_type = 'Expense' group by strftime(\"%m-%Y\", date);", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                double statementRow;
+                statementRow = cursor.getDouble(cursor.getColumnIndex("SUM(amount)"));
+                report.add(statementRow);
+                Log.d("getExpense","........................... balance "+statementRow);
             }
             while (cursor.moveToNext());
             cursor.close();
@@ -333,30 +460,40 @@ public class TransactionCRUD extends DBHelper {
         return report;
     }
 
-    public ArrayList getExpenseSum() {
 
+/*
+    public ArrayList<TransactionModel> getAllBudgets() {
+        ArrayList<TransactionModel> reminderList = new ArrayList<TransactionModel>();
         db = this.getReadableDatabase();
-        ArrayList<String[]> report = new ArrayList<>();
+        String query = "select * from budgets order by date desc";
+        try {
+            Cursor cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    String category= cursor.getString(cursor.getColumnIndex("category_name"));
+                    Double amount = cursor.getDouble(cursor.getColumnIndex("balance"));
+                    ReportModel reportModel = new ReportModel(category,amount);
 
-        Cursor cursor = db.rawQuery("select date, sum(amount) from transactions where category_type = 'Expense' group by date", null);
+                    TransactionModel transactionModel = new TransactionModel(id, user_id, category_id, trans_id, amount, note, date, category_type);
+                    transactionModel.setTime(time);
+                    *//*DecimalFormat df = new DecimalFormat("#");
+                    df.setMaximumFractionDigits(8);*//*
 
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
+                    reminderList.add(transactionModel);
+                    Log.d("all reminder data", "......................." + trans_id + category_type + " amount " + amount + " " + note + date);
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            } else
 
-            do {
-                String statementRow[] = new String[2];
-                statementRow[0] = cursor.getString(cursor.getColumnIndex("date"));
-                statementRow[1] = String.valueOf(cursor.getDouble(cursor.getColumnIndex("sum(amount)")));
-                report.add(statementRow);
-                Log.d("getExpenseSum","........................... category name "+statementRow[0]+" balance "+statementRow[1]);
-            }
-            while (cursor.moveToNext());
-            cursor.close();
-            db.close();
-            return report;
+                Log.d("All reminder db", "...................Cursor is empty");
+        } catch (Exception e) {
+            Log.e("All reminder db", "...............Exception  While Receiving Data From transactions " + e);
         }
         db.close();
-        return report;
-    }
+        return reminderList;
+    }*/
+
 
 }

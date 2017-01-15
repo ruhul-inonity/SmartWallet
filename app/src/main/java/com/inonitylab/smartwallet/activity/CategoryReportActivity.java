@@ -46,7 +46,7 @@ public class CategoryReportActivity extends AppCompatActivity {
         int categoryId = categoriesCRUD.getCategoryId(category);
         allTransactionsList = transactionCRUD.getTransactionsByCategory(categoryId);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_category_transaction);
-        transactionAdapter = new TransactionAdapter(allTransactionsList);
+        transactionAdapter = new TransactionAdapter(allTransactionsList, category);
 
         transactionAdapter.notifyDataSetChanged();
     }
